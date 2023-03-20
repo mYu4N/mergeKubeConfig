@@ -1,5 +1,5 @@
-2023-03-20更新
-增加filename的可读性，原始读取filename加上序号
+2023-03-20 待更新
+计划增加相关字段的可读性，如原始字段名称的值是读取filename加上序号
 ```
 # kubectl config get-contexts --kubeconfig=./config 
 CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
@@ -13,9 +13,9 @@ total 16
 
 变更后的contexts名称将从kubeconfig里面提取name来命名
 
-如：
+如： 即 可以使用config文件名来命名生产，测试，语法等环境，后面展示对应的集群id，以及哪个子账号的uid
 ```
-# kubectl config get-contexts --kubeconfig=./config 
+# kubectl config get-contexts --kubeconfig=./config  
 CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
           flannel.config-0   集群id                       子账号-uid  
           ipvlan.config-0    集群id                       子账号-uid   
