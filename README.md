@@ -1,6 +1,6 @@
 2023-03-20更新
-# 增加filename的可读性
-原始读取filename加上序号
+增加filename的可读性，原始读取filename加上序号
+```
 # kubectl config get-contexts --kubeconfig=./config 
 CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
           flannel.config-0   flannel.config-0-cluster   flannel.config-0-user   
@@ -9,15 +9,17 @@ CURRENT   NAME               CLUSTER                    AUTHINFO                
 total 16
 -rw-r--r-- 1 root root 7999 Mar 20 10:51 flannel.config
 -rw-r--r-- 1 root root 7313 Mar 20 10:51 ipvlan.config
+```
 
 变更后的contexts名称将从kubeconfig里面提取name来命名
 
 如：
+```
 # kubectl config get-contexts --kubeconfig=./config 
 CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
           flannel.config-0   集群id                       子账号-uid  
           ipvlan.config-0    集群id                       子账号-uid   
-
+```
 -------下面为fork的代码源地址及介绍------
 # 合并kubeconfig文件
 
