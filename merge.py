@@ -1,50 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-# Author: guoxudong
-"""
-Author: guoxudong
-Time: 2019-03-15
-UpdateTime: 2019-04-28
-
-This script is used to merge the file of kubeconfig
-Before using it, you should make sure your python has package: PyYAML
-Install it: pip install PyYAML
-
----
-这个脚本用于合并多个kubeconfig文件，用于在一台终端操作多个kubernetes集群
-需要提前安装的Python包：PyYAML
-安装：pip install PyYAML
-
-2019-04-28 更新内容：
-新增增量合并，在已使用本合并后的 kubeconfig 后，可以使用 ```-a addfilename -t tofilename``` 参数将新的配置合并到原来已经合并好的文件中
-
----
-Before Usage:
-1. Install package PyYAML
-2. Set your infomation at the top of the scripts
-
----
-使用之前：
-1. 安装PyYAML包
-2. 可以传入参数 -d kubeconfig文件所在的目录
-
----
-Usage:
-  Select directory:
-    python merge.py -d configfile
-
-  add new config:
-    python merge.py -a addfilename -t tofilename
-
----
-使用：
-  自定义选择目录
-    python merge.py -d configfile
-
-  向已合并的配置文件中增加新的配置
-    python merge.py -a addfilename -t tofilename
-
-"""
+# Author: guoxudong yufeng.s muyuan.y
 import argparse
 import json
 import os
@@ -152,24 +108,28 @@ def handleYaml(c, filename):
     for i, context in enumerate(c.get('contexts', '')):
         cluster = context['context']['cluster']
         user = context['context']['user']
+        _ctt_name_list = context['name'].split('-')
         name = filename + '-' + str(i)
         context['name'] = name
         ALLCONTEXTS.append(name)
 
         for clu in c.get('clusters', ''):
             if cluster == clu['name']:
-                cluster_name = name + '-cluster'
+                # cluster_name = name + '-cluster'
+                cluster_name = _ctt_name_list[1]
                 clu['name'] = cluster_name
                 context['context']['cluster'] = cluster_name
 
         if len(c.get('clusters')) > len(c.get('users')):
-            user_name = name + '-user'
+            # user_name = name + '-user'
+            user_name = name + '-' + _ctt_name_list[0]
             c['users'][0]['name'] = user_name
             context['context']['user'] = user_name
         else:
             for usr in c.get('users', ''):
                 if user == usr['name']:
-                    user_name = name + '-user'
+                    # user_name = name + '-user'
+                    user_name = name + '-' + _ctt_name_list[0]
                     usr['name'] = user_name
                     context['context']['user'] = user_name
 
