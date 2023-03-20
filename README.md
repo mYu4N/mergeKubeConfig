@@ -1,5 +1,5 @@
-2023-03-20 待更新
-计划增加相关字段的可读性，如原始字段名称的值是读取filename加上序号
+2023-03-20 适配阿里云ack的kubeconfig
+增加contexts字段的可读性，如原始字段名称的值是读取filename加上序号
 ```
 # kubectl config get-contexts --kubeconfig=./config 
 CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
@@ -15,10 +15,10 @@ total 16
 
 如： 即 可以使用config文件名来命名生产，测试，语法等环境，后面展示对应的集群id，以及哪个子账号的uid
 ```
-# kubectl config get-contexts --kubeconfig=./config  
-CURRENT   NAME               CLUSTER                    AUTHINFO                NAMESPACE
-          flannel.config-0   集群id                       子账号-uid  
-          ipvlan.config-0    集群id                       子账号-uid   
+# kubectl config get-contexts --kubeconfig=config 
+CURRENT   NAME               CLUSTER                             AUTHINFO                              NAMESPACE
+          flannel.config-0   cf3245*******471   flannel.config-0-223*****513   
+          ipvlan.config-0    cf406d*****1cb   ipvlan.config-0-223****13
 ```
 -------下面为fork的代码源地址及介绍------
 # 合并kubeconfig文件
